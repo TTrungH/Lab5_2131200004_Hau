@@ -7,6 +7,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 48,
   },
+  header: {
+    marginTop: 20,
+    marginLeft: '80%',
+    position: 'absolute',
+    zIndex: 1000
+  },
+  detailContainer: {
+    flex: 1,
+  },
+  accountIcon: {
+    marginRight: 15,
+    backgroundColor: 'white',
+    padding: 5,
+    borderRadius: 20,
+    color: '#EF506B',
+  },
+  home: {
+    justifyContent: 'center',
+    flex: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
   title: {
     fontSize: 48,
     fontWeight: 'bold',
@@ -39,6 +61,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     marginTop: 10,
+    marginBottom: 10,
     paddingHorizontal: 20,
   },
   addButton: {
@@ -46,13 +69,29 @@ const styles = StyleSheet.create({
     borderRadius: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '7%',
+    width: '10%',
     marginLeft: '50%',
   },
   addButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
+  },
+  menuItem: {
+    paddingLeft: 10,
+    fontSize: 16,
+    color: 'red',
+  },
+  menuTrigger: {
+    position: 'absolute',
+    top: 10,
+    right: 100,
+  },
+  Detail: {
+    flexDirection: 'row',
+  },
+  DetailContent: {
+    marginTop: 10,
   },
   listTitle: {
     fontWeight: 'bold',

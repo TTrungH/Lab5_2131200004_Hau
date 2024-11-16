@@ -10,10 +10,13 @@ import {useState} from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
-
+  const handleLogin =()=>{
+    gettoken(user, pass);
+    navigation.navigate('Display');
+  }
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -33,13 +36,14 @@ const LoginScreen = () => {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => gettoken(user, pass)}>
+          onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
   );
 };
+
 const gettoken = (user, pass) => {
   // '0373007856','123'
   const postData = {
@@ -52,50 +56,29 @@ const gettoken = (user, pass) => {
     .then(response => {
       console.log(response.data);
       setToken(response.data.token);
-      
+      setName(response.data.name);
     })
     .catch(error => {
       console.error('Error:', error);
     });
 };
-const setToken = async token => {
+const setToken = async (token) => {
   try {
-    await AsyncStorage.setItem('token', `'${token}'`);
+    await AsyncStorage.setItem('token', token);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+const setName = async (name) => {
+  try {
+    await AsyncStorage.setItem('name', name);
   } catch (error) {
     console.error('Error:', error);
   }
 };
 
 
-const getData = id => {
-  axios
-    .get('https://kami-backend-5rs0.onrender.com/services/' + {id})
-    .then(response => {
-      console.log('Data:', response.data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-};
 
-const deletedata = (token, id) => {
-  axios
-    .delete(
-      'https://kami-backend-5rs0.onrender.com/services/' + {id},
 
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      },
-    )
-    .then(response => {
-      console.log('Response:', response.data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-};
 
 export default LoginScreen;

@@ -4,11 +4,11 @@ import {useState} from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AddScreen = () => {
+const EditScreen = ({route, navigation}) => {
   const [service, setService] = useState('');
   const [price, setPrice] = useState(0);
-
-  const adddata = async (name, price) => {
+  const {newid} = route.params;
+  const editdata = async (name, price) => {
     const postData = {
       name: name,
       price: price,
@@ -17,23 +17,20 @@ const AddScreen = () => {
     try {
       const token = await AsyncStorage.getItem('token');
       if (token !== null) {
-        console.log(token);
-        add(token, postData);
+        change(token, postData);
       }
+      navigation.navigate('Home');
     } catch (error) {
       console.error('Error:', error);
     }
   };
-  const add = (newtoken, data) => {
+  const change = (newtoken, data) => {
     axios
-      .post('https://kami-backend-5rs0.onrender.com/services', data, {
+      .put('https://kami-backend-5rs0.onrender.com/services/' + newid, data, {
         headers: {
           Authorization: `Bearer ${newtoken}`,
           'Content-Type': 'application/json',
         },
-      })
-      .then(response => {
-        console.log('Response:', response.data);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -57,11 +54,11 @@ const AddScreen = () => {
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => adddata(service, price)}>
-        <Text style={styles.buttonText}>Add</Text>
+        onPress={() => editdata(service, price)}>
+        <Text style={styles.buttonText}>Update</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default AddScreen;
+export default EditScreen;

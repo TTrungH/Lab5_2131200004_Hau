@@ -1,17 +1,9 @@
-import {
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  FlatList,
-} from 'react-native';
+import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
 import styles from './Style';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
-
-const HomeScreen = () => {
+import {useFocusEffect} from '@react-navigation/native';
+const HomeScreen = ({navigation}) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
@@ -23,13 +15,29 @@ const HomeScreen = () => {
         console.error('Error:', error);
       });
   }, []);
+  useFocusEffect(
+    useCallback(() => {
+      // Giả sử đây là dữ liệu được lấy từ API
+      axios
+        .get('https://kami-backend-5rs0.onrender.com/services')
+        .then(response => {
+          
+          setData(response.data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }, []),
+  );
 
   return (
-    <ScrollView >
+    <View style={styles.home}>
       <Image source={require('./Logo.png')} style={styles.image} />
       <View style={styles.titleContainer}>
         <Text style={styles.listTitle}>Danh sách dịch vụ</Text>
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => navigation.navigate('Add')}>
           <Text style={styles.addButtonText}>+</Text>
         </TouchableOpacity>
       </View>
@@ -38,14 +46,17 @@ const HomeScreen = () => {
         keyExtractor={item => item.id}
         renderItem={({item}) => {
           return (
-            <TouchableOpacity style={styles.productContainer}>
+            <TouchableOpacity
+              style={styles.productContainer}
+              onPress={() => navigation.navigate('Detail', {id: item._id})}>
               <Text style={styles.productName}>{item.name}</Text>
               <Text style={styles.price}>{item.price}</Text>
             </TouchableOpacity>
           );
         }}
+        showsVerticalScrollIndicator={false}
       />
-    </ScrollView>
+    </View>
   );
 };
 
