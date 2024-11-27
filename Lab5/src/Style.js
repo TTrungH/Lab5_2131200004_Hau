@@ -1,6 +1,79 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
+  icon: {
+    fontSize: 24,
+    color: 'black',
+    marginRight: 15,
+  },
+  menuOption: {
+    padding: 10,
+    fontSize: 16,
+  },
+  homeMenu: {
+    height: 50,
+    backgroundColor:'#EF506B'
+  },
+  transactionId: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 8,
+  },
+  TransactionDetailPrice: {
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+  Loyalty: {
+    alignItems: 'center',
+    paddingRight: 15,
+  },
+  TransactionDetailInf: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  TransactionDetailTotal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#F4F4F4',
+  },
+  transactionContent: {
+    fontSize: 10,
+    fontWeight: 'normal',
+    overflow: 'hidden',
+    paddingTop: 5,
+  },
+  transactionPrice: {
+    color: 'red',
+    fontSize: 12,
+  },
+  transactionDetailContainer: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    margin: 10,
+    padding: 10,
+  },
+  transactionDetail: {
+    color: 'grey',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+  transactionDetailTitle: {
+    color: '#EF506B',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  transactionDetailPrice: {
+    fontWeight: 'bold',
+  },
+  transactionDetailTotal: {
+    fontWeight: 'bold',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -8,13 +81,28 @@ const styles = StyleSheet.create({
     padding: 48,
   },
   header: {
-    marginTop: 20,
-    marginLeft: '80%',
-    position: 'absolute',
-    zIndex: 1000
+    marginTop: '3%',
+    marginLeft: '75%',
   },
   detailContainer: {
     flex: 1,
+  },
+  addButtonOther: {
+    backgroundColor: '#EF506B',
+    borderRadius: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '12%',
+    height: '8%',
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    zIndex: 1000,
+  },
+  addButtonTextOther: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: 'white',
   },
   accountIcon: {
     marginRight: 15,
@@ -89,6 +177,7 @@ const styles = StyleSheet.create({
   },
   Detail: {
     flexDirection: 'row',
+    marginLeft: 10,
   },
   DetailContent: {
     marginTop: 10,
@@ -98,8 +187,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   productContainer: {
-    flexDirection: 'row', // Căn các phần tử theo chiều ngang
-    alignItems: 'center', // Căn giữa theo chiều dọc
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 10,
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -108,7 +197,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   productName: {
-    flex: 1, // Cho phép tên sản phẩm chiếm phần lớn không gian
+    flex: 1,
     fontSize: 16,
     fontWeight: 'bold',
     color: '#333',

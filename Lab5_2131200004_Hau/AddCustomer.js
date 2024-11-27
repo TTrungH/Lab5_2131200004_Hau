@@ -4,33 +4,37 @@ import {useState} from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const EditScreen = ({route, navigation}) => {
-  const [service, setService] = useState('');
-  const [price, setPrice] = useState(0);
-  const {newid} = route.params;
-  const editdata = async (name, price) => {
+const AddCustomerScreen = ({navigation}) => {
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState(0);
+
+  const adddata = async (name, phone) => {
     const postData = {
       name: name,
-      price: price,
+      phone: phone,
     };
 
     try {
       const token = await AsyncStorage.getItem('token');
       if (token !== null) {
-        change(token, postData);
+        add(token, postData);
       }
-      navigation.navigate('Home');
+      navigation.goBack();
     } catch (error) {
       console.error('Error:', error);
     }
   };
-  const change = (newtoken, data) => {
+  const add = (newtoken, data) => {
     axios
-      .put('https://kami-backend-5rs0.onrender.com/services/' + newid, data, {
+      .post('https://kami-backend-5rs0.onrender.com/customers', data, {
         headers: {
           Authorization: `Bearer ${newtoken}`,
           'Content-Type': 'application/json',
         },
+      })
+      .then(response => {
+        console.log('Response:', response.data);
+        
       })
       .catch(error => {
         console.error('Error:', error);
@@ -38,27 +42,27 @@ const EditScreen = ({route, navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.listTitle}>Service name *</Text>
+      <Text style={styles.listTitle}>Customer name *</Text>
       <TextInput
         style={styles.input}
-        value={service}
-        placeholder="Input a service name"
-        onChangeText={text => setService(text)}
+        value={name}
+        placeholder="Input your customer's name"
+        onChangeText={text => setName(text)}
       />
-      <Text style={styles.listTitle}>Price *</Text>
+      <Text style={styles.listTitle}>Phone *</Text>
       <TextInput
         style={styles.input}
-        placeholder="0"
-        value={price}
-        onChangeText={text => setPrice(text)}
+        placeholder="input phone number"
+        value={phone}
+        onChangeText={text => setPhone(text)}
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => editdata(service, price)}>
-        <Text style={styles.buttonText}>Update</Text>
+        onPress={() => adddata(name, phone)}>
+        <Text style={styles.buttonText}>Add</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default EditScreen;
+export default AddCustomerScreen;

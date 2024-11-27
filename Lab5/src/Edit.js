@@ -4,10 +4,9 @@ import {useState} from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const EditScreen = ({route, navigation}) => {
+const EditScreen = ({navigation}) => {
   const [service, setService] = useState('');
   const [price, setPrice] = useState(0);
-  const {newid} = route.params;
   const editdata = async (name, price) => {
     const postData = {
       name: name,
@@ -16,17 +15,18 @@ const EditScreen = ({route, navigation}) => {
 
     try {
       const token = await AsyncStorage.getItem('token');
-      if (token !== null) {
-        change(token, postData);
+      const id = await AsyncStorage.getItem('id');
+      if (token !== null && id !== null) {
+        change(token, postData, id);
       }
-      navigation.navigate('Home');
+      navigation.pop(2);
     } catch (error) {
       console.error('Error:', error);
     }
   };
-  const change = (newtoken, data) => {
+  const change = (newtoken, data, id) => {
     axios
-      .put('https://kami-backend-5rs0.onrender.com/services/' + newid, data, {
+      .put('https://kami-backend-5rs0.onrender.com/services/' + id, data, {
         headers: {
           Authorization: `Bearer ${newtoken}`,
           'Content-Type': 'application/json',

@@ -14,6 +14,10 @@ const LoginScreen = ({ navigation }) => {
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
   const handleLogin =()=>{
+    if (user.trim() === '' && pass.trim() === '') {
+      Alert.alert('Error', 'Please enter a value before proceeding!');
+      return;
+    }
     gettoken(user, pass);
     navigation.navigate('Display');
   }
@@ -26,6 +30,7 @@ const LoginScreen = ({ navigation }) => {
           placeholder="Phone"
           value={user}
           onChangeText={text => setUser(text)}
+          
         />
         <TextInput
           style={styles.input}

@@ -3,6 +3,7 @@ import styles from './Style';
 import {useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const HomeScreen = ({navigation}) => {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -10,6 +11,7 @@ const HomeScreen = ({navigation}) => {
       .get('https://kami-backend-5rs0.onrender.com/services')
       .then(response => {
         setData(response.data);
+        
       })
       .catch(error => {
         console.error('Error:', error);
@@ -29,7 +31,14 @@ const HomeScreen = ({navigation}) => {
         });
     }, []),
   );
-
+  const setId = async (id) => {
+    try {
+      await AsyncStorage.setItem('id', id);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
   return (
     <View style={styles.home}>
       <Image source={require('./Logo.png')} style={styles.image} />
@@ -41,6 +50,7 @@ const HomeScreen = ({navigation}) => {
           <Text style={styles.addButtonText}>+</Text>
         </TouchableOpacity>
       </View>
+      
       <FlatList
         data={data}
         keyExtractor={item => item.id}
@@ -48,8 +58,8 @@ const HomeScreen = ({navigation}) => {
           return (
             <TouchableOpacity
               style={styles.productContainer}
-              onPress={() => navigation.navigate('Detail', {id: item._id})}>
-              <Text style={styles.productName}>{item.name}</Text>
+              onPress={() => navigation.navigate('Detail',setId(item._id))}>
+              <Text style={styles.productName} numberOfLines={1} ellipsizeMode="tail">{item.name}</Text>
               <Text style={styles.price}>{item.price}</Text>
             </TouchableOpacity>
           );
