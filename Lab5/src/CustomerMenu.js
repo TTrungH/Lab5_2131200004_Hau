@@ -9,8 +9,7 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const HomeMenu = ({navigation}) => {
+const CustomerMenu = ({navigation}) => {
   const handleDelete = () => {
     Alert.alert(
       'Warning',
@@ -33,7 +32,7 @@ const HomeMenu = ({navigation}) => {
       const token = await AsyncStorage.getItem('token');
       const id = await AsyncStorage.getItem('id');
       if (token !== null && id !== null) {
-        deletedata(token,id);
+        deletedata(token, id);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -42,7 +41,7 @@ const HomeMenu = ({navigation}) => {
   const deletedata = (token, id) => {
     axios
       .delete(
-        'https://kami-backend-5rs0.onrender.com/services/' + id,
+        'https://kami-backend-5rs0.onrender.com/Customers/' + id,
 
         {
           headers: {
@@ -72,7 +71,7 @@ const HomeMenu = ({navigation}) => {
             marginTop: 30,
           },
         }}>
-        <MenuOption onSelect={() => navigation.navigate('Edit')}>
+        <MenuOption onSelect={() => navigation.navigate('CustomerEdit')}>
           <Text style={styles.menuItem}>
             <Icon name="pencil" size={15} color={'black'} /> Edit
           </Text>
@@ -86,5 +85,4 @@ const HomeMenu = ({navigation}) => {
     </Menu>
   );
 };
-
-export default HomeMenu;
+export default CustomerMenu;

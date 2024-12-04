@@ -8,14 +8,18 @@ import Customer from './Customer';
 import AddCustomer from './AddCustomer';
 import Transaction from './Transaction';
 import TransactionDetail from './TransactionDetail';
+import CustomerDetail from './CustomerDetail';
+import CustomerEdit from './CustomerEdit';
+import CustomerMenu from './CustomerMenu';
+import TransactionAdd from './TransactionAdd';
+import TransactionMenu from './TransactionMenu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './Style';
-import {View, Text, TouchableOpacity, } from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import HomeMenu from './HomeMenu';
-
 
 const Stack = createStackNavigator();
 
@@ -85,7 +89,15 @@ function TransactionScreen({}) {
       <Stack.Screen
         name="TransactionDetail"
         component={TransactionDetail}
-        options={{title: 'TransactionDetail'}}
+        options={({navigation}) => ({
+          title: 'TransactionDetail',
+          headerRight: () => <TransactionMenu navigation={navigation} />,
+        })}
+      />
+      <Stack.Screen
+        name="TransactionAdd"
+        component={TransactionAdd}
+        options={{title: 'TransactionAdd'}}
       />
     </Stack.Navigator>
   );
@@ -113,6 +125,19 @@ function CustomerScreen({}) {
         name="AddCustomer"
         component={AddCustomer}
         options={{title: 'AddCustomer'}}
+      />
+      <Stack.Screen
+        name="CustomerEdit"
+        component={CustomerEdit}
+        options={{title: 'CustomerEdit'}}
+      />
+      <Stack.Screen
+        name="CustomerDetail"
+        component={CustomerDetail}
+        options={({navigation}) => ({
+          title: 'CustomerDetail',
+          headerRight: () => <CustomerMenu navigation={navigation} />,
+        })}
       />
     </Stack.Navigator>
   );
@@ -207,7 +232,6 @@ const TabNavigator = ({}) => {
 };
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////
 const DisplayScreen = () => {
   return <HomeScreen />;
 };

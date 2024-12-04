@@ -9,21 +9,20 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const HomeMenu = ({navigation}) => {
+const TransactionMenu = () => {
   const handleDelete = () => {
     Alert.alert(
       'Warning',
-      'Are you sure you want to remove this service? This operation cannot be returned.',
+      'Are you sure you want to cancel this transaction? This will affect the customer transaction information.',
       [
+        {
+          text: 'YES',
+          onPress: deleteData,
+          style: 'destructive',
+        },
         {
           text: 'CANCEL',
           style: 'cancel',
-        },
-        {
-          text: 'DELETE',
-          onPress: deleteData,
-          style: 'destructive',
         },
       ],
     );
@@ -33,7 +32,7 @@ const HomeMenu = ({navigation}) => {
       const token = await AsyncStorage.getItem('token');
       const id = await AsyncStorage.getItem('id');
       if (token !== null && id !== null) {
-        deletedata(token,id);
+        deletedata(token, id);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -42,7 +41,7 @@ const HomeMenu = ({navigation}) => {
   const deletedata = (token, id) => {
     axios
       .delete(
-        'https://kami-backend-5rs0.onrender.com/services/' + id,
+        'https://kami-backend-5rs0.onrender.com/transactions/' + id,
 
         {
           headers: {
@@ -67,24 +66,19 @@ const HomeMenu = ({navigation}) => {
       <MenuOptions
         customStyles={{
           optionsContainer: {
-            width: 120,
+            width: 180,
             padding: 5,
             marginTop: 30,
           },
         }}>
-        <MenuOption onSelect={() => navigation.navigate('Edit')}>
-          <Text style={styles.menuItem}>
-            <Icon name="pencil" size={15} color={'black'} /> Edit
-          </Text>
+        <MenuOption onSelect={() => navigation.navigate('')}>
+          <Text style={styles.menuItem}>See more details</Text>
         </MenuOption>
         <MenuOption onSelect={handleDelete}>
-          <Text style={styles.menuItem}>
-            <Icon name="trash-can" size={15} color={'black'} /> Delete
-          </Text>
+          <Text style={styles.menuItem}>Cancel transaction</Text>
         </MenuOption>
       </MenuOptions>
     </Menu>
   );
 };
-
-export default HomeMenu;
+export default TransactionMenu;

@@ -4,6 +4,7 @@ import {useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const CustomerScreen = ({navigation}) => {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -11,6 +12,7 @@ const CustomerScreen = ({navigation}) => {
       .get('https://kami-backend-5rs0.onrender.com/customers')
       .then(response => {
         setData(response.data);
+        console.log(response.data);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -28,7 +30,13 @@ const CustomerScreen = ({navigation}) => {
         });
     }, []),
   );
-
+  const setId = async id => {
+    try {
+      await AsyncStorage.setItem('id', id);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   return (
     <View style={styles.home}>
       <TouchableOpacity
@@ -38,19 +46,25 @@ const CustomerScreen = ({navigation}) => {
       </TouchableOpacity>
       <FlatList
         data={data}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item._id}
         renderItem={({item}) => {
           return (
             <TouchableOpacity
               style={styles.transactionDetailContainer}
-              onPress={() => navigation.navigate('', {id: item._id})}>
+              onPress={() =>
+                navigation.navigate(
+                  'CustomerDetail',
+                  {id: item._id},
+                  setId(item._id),
+                )
+              }>
               <View style={styles.TransactionDetailInf}>
                 <View>
                   <Text style={styles.transactionDetail}>
-                    Customer:  {item.name}
+                    Customer: {item.name}
                   </Text>
                   <Text style={styles.transactionDetail}>
-                    Phone:  {item.phone}
+                    Phone: {item.phone}
                   </Text>
                   <Text style={styles.transactionDetail}>
                     Total money:{'  '}
@@ -59,7 +73,9 @@ const CustomerScreen = ({navigation}) => {
                 </View>
                 <View style={styles.Loyalty}>
                   <Icon name="crown" size={30} color={'#EF506B'} />
-                  <Text style={{color: '#EF506B',fontWeight:'bold'}}>{item.loyalty}</Text>
+                  <Text style={{color: '#EF506B', fontWeight: 'bold'}}>
+                    {item.loyalty}
+                  </Text>
                 </View>
               </View>
             </TouchableOpacity>

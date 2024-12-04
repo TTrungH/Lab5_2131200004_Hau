@@ -19,11 +19,10 @@ const HomeScreen = ({navigation}) => {
   }, []);
   useFocusEffect(
     useCallback(() => {
-      // Giả sử đây là dữ liệu được lấy từ API
       axios
         .get('https://kami-backend-5rs0.onrender.com/services')
         .then(response => {
-          
+          console.log(response.data)
           setData(response.data);
         })
         .catch(error => {
@@ -53,7 +52,7 @@ const HomeScreen = ({navigation}) => {
       
       <FlatList
         data={data}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item._id}
         renderItem={({item}) => {
           return (
             <TouchableOpacity

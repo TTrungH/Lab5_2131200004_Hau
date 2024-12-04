@@ -1,10 +1,74 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
+  containerTrans: {
+    alignItems: 'center',
+    padding: 20,
+  },
+  counterContainerTrans: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  buttonTrans: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
+  },
+  buttonTextTrans: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  quantityTrans: {
+    marginHorizontal: 15,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  priceTrans: {
+    fontSize: 16,
+    color: '#ff5c5c',
+    fontWeight: 'bold',
+  },
   icon: {
     fontSize: 24,
     color: 'black',
     marginRight: 15,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
   menuOption: {
     padding: 10,
@@ -86,6 +150,7 @@ const styles = StyleSheet.create({
   },
   detailContainer: {
     flex: 1,
+    padding:5
   },
   addButtonOther: {
     backgroundColor: '#EF506B',

@@ -3,6 +3,8 @@ import styles from './Style';
 import {useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const TransactionScreen = ({navigation}) => {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -27,12 +29,21 @@ const TransactionScreen = ({navigation}) => {
         });
     }, []),
   );
-
+  const setId = async (id) => {
+    console.log(id);
+    try {
+      await AsyncStorage.setItem('id', id);
+      
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
   return (
     <View style={styles.home}>
       <TouchableOpacity
         style={styles.addButtonOther}
-        onPress={() => navigation.navigate('')}>
+        onPress={() => navigation.navigate('TransactionAdd')}>
         <Text style={styles.addButtonTextOther}>+</Text>
       </TouchableOpacity>
       <FlatList
@@ -41,7 +52,7 @@ const TransactionScreen = ({navigation}) => {
         renderItem={({item}) => {
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate('TransactionDetail', {id: item._id})}
+              onPress={() => navigation.navigate('TransactionDetail', {id: item._id}, setId(item._id))}
               style={styles.productContainer}>
               <Text style={styles.transactionId}>
                 {item.id} - {item.createdAt} -

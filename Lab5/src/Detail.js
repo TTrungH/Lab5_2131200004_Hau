@@ -5,7 +5,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const DetailScreen = ({navigation}) => {
+const DetailScreen = ({}) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [creator, setCreator] = useState('');
